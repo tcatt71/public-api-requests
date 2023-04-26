@@ -115,42 +115,29 @@ function displayModal(e, employee) {
   });
 }
 
-/* <form action="#" method="get">
-     <input type="search" id="search-input" class="search-input" placeholder="Search...">
-     <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-   </form> */
 
-const form = document.createElement('FORM');
-const searchInput = document.createElement('INPUT');
-// const submitButton = document.createElement('INPUT');
-const submitButton = document.createElement('BUTTON');
-const searchIcon = document.createElement('I');
+createSearchBar();
 
-form.action = '#';
-form.method = 'get';
+function createSearchBar() {
+  const form = document.createElement('FORM');
+  const searchInput = document.createElement('INPUT');
+  const submitButton = document.createElement('INPUT');
 
-searchInput.type = 'search';
-searchInput.id = 'search-input';
-searchInput.className = 'search-input';
-searchInput.placeholder = 'Search...';
+  form.action = '#';
+  form.method = 'get';
 
-submitButton.type = 'submit';
+  searchInput.type = 'search';
+  searchInput.id = 'search-input';
+  searchInput.className = 'search-input';
+  searchInput.placeholder = 'Search...';
 
-// submitButton.innerHTML = '&#x1F50D;';
-// submitButton.value = `${submitButton.innerHTML}`;
+  submitButton.type = 'submit';
+  submitButton.value = new DOMParser().parseFromString('&#x1F50D;', 'text/html').documentElement.textContent;
+  submitButton.id = 'search-submit';
+  submitButton.className = 'search-submit';
 
-submitButton.value = '&#x1F50D;';
-submitButton.id = 'search-submit';
-submitButton.className = 'search-submit';
+  const searchContainer = document.getElementsByClassName('search-container');
 
-searchIcon.className = 'fa-solid fa-magnifying-glass';
-
-const searchContainer = document.getElementsByClassName('search-container');
-
-searchContainer[0].append(form);
-form.append(searchInput, submitButton);
-submitButton.append(searchIcon);
-
-console.log(searchContainer[0]);
-
-// https://fontawesome.com/icons/magnifying-glass?f=classic&s=solid
+  searchContainer[0].append(form);
+  form.append(searchInput, submitButton);
+}
