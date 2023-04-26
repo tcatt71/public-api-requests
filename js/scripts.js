@@ -1,4 +1,4 @@
-fetch('https://randomuser.me/api/?results=12')
+fetch('https://randomuser.me/api/?results=12&nat=au,ca,gb,us')
   .then(response => response.json())
   .then(data => displayCards(data.results));
 
@@ -114,3 +114,43 @@ function displayModal(e, employee) {
     }
   });
 }
+
+/* <form action="#" method="get">
+     <input type="search" id="search-input" class="search-input" placeholder="Search...">
+     <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+   </form> */
+
+const form = document.createElement('FORM');
+const searchInput = document.createElement('INPUT');
+// const submitButton = document.createElement('INPUT');
+const submitButton = document.createElement('BUTTON');
+const searchIcon = document.createElement('I');
+
+form.action = '#';
+form.method = 'get';
+
+searchInput.type = 'search';
+searchInput.id = 'search-input';
+searchInput.className = 'search-input';
+searchInput.placeholder = 'Search...';
+
+submitButton.type = 'submit';
+
+// submitButton.innerHTML = '&#x1F50D;';
+// submitButton.value = `${submitButton.innerHTML}`;
+
+submitButton.value = '&#x1F50D;';
+submitButton.id = 'search-submit';
+submitButton.className = 'search-submit';
+
+searchIcon.className = 'fa-solid fa-magnifying-glass';
+
+const searchContainer = document.getElementsByClassName('search-container');
+
+searchContainer[0].append(form);
+form.append(searchInput, submitButton);
+submitButton.append(searchIcon);
+
+console.log(searchContainer[0]);
+
+// https://fontawesome.com/icons/magnifying-glass?f=classic&s=solid
