@@ -106,7 +106,7 @@ function displayModal(e, employee) {
   modalInfoContainer.append(img, name, email, city, horizontalLine, cell, address, birthday);
 
   const body = document.getElementsByTagName('body');
-  body[0].insertAdjacentElement('beforeend',modalContainer );
+  body[0].insertAdjacentElement('beforeend', modalContainer);
 
   modalContainer.addEventListener('click', (e) => {
     if (e.target === modalContainer || e.target === modalCloseBtn || e.target === strongTextElement) {
@@ -140,4 +140,24 @@ function createSearchBar() {
 
   searchContainer[0].append(form);
   form.append(searchInput, submitButton);
+
+  searchInput.addEventListener('keyup', displaySearchResults);
+}
+
+function displaySearchResults() {
+  const gallery = document.getElementById('gallery');
+  const cards = gallery.getElementsByClassName('card');
+  const searchBox = document.getElementById('search-input');
+
+  const searchInput = searchBox.value.toLowerCase();
+
+  for (const card of cards) {
+    const name = card.lastElementChild.firstElementChild.textContent.toLowerCase();
+
+    if (name.includes(searchInput)) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  }
 }
