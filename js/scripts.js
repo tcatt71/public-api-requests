@@ -126,7 +126,7 @@ function displayModal(e, employee) {
 
   modalContainer.addEventListener('click', (e) => {
     if (e.target === modalContainer || e.target === modalCloseBtn || e.target === strongTextElement) {
-      modalContainer.hidden = true;
+      modalContainer.remove();
     }
   });
 }
