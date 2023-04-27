@@ -150,44 +150,42 @@ function displayModal(employee, data) {
 createSearchBar();
 
 function createSearchBar() {
+  const searchContainer = document.getElementsByClassName('search-container');
+
   const form = document.createElement('FORM');
   const searchInput = document.createElement('INPUT');
   const submitButton = document.createElement('INPUT');
 
   form.action = '#';
   form.method = 'get';
-
   searchInput.type = 'search';
   searchInput.id = 'search-input';
   searchInput.className = 'search-input';
   searchInput.placeholder = 'Search...';
-
   submitButton.type = 'submit';
   submitButton.value = new DOMParser().parseFromString('&#x1F50D;', 'text/html').documentElement.textContent;
   submitButton.id = 'search-submit';
   submitButton.className = 'search-submit';
 
-  const searchContainer = document.getElementsByClassName('search-container');
+  searchInput.addEventListener('keyup', displaySearchResults);
+
+  function displaySearchResults() {
+    const gallery = document.getElementById('gallery');
+    const cards = gallery.getElementsByClassName('card');
+    const searchBox = document.getElementById('search-input');
+    const searchInput = searchBox.value.toLowerCase();
+
+    for (const card of cards) {
+      const name = card.lastElementChild.firstElementChild.textContent.toLowerCase();
+
+      if (name.includes(searchInput)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    }
+  }
 
   searchContainer[0].append(form);
   form.append(searchInput, submitButton);
-
-  searchInput.addEventListener('keyup', displaySearchResults);
-}
-
-function displaySearchResults() {
-  const gallery = document.getElementById('gallery');
-  const cards = gallery.getElementsByClassName('card');
-  const searchBox = document.getElementById('search-input');
-  const searchInput = searchBox.value.toLowerCase();
-
-  for (const card of cards) {
-    const name = card.lastElementChild.firstElementChild.textContent.toLowerCase();
-
-    if (name.includes(searchInput)) {
-      card.style.display = 'flex';
-    } else {
-      card.style.display = 'none';
-    }
-  }
 }
