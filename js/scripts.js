@@ -51,6 +51,8 @@ function createCard(employee) {
 }
 
 function displayModal(e, employee) {
+  const gallery = document.getElementById('gallery');
+
   const modalContainer = document.createElement('DIV');
   const modal = document.createElement('DIV');
   const modalCloseBtn = document.createElement('BUTTON');
@@ -115,14 +117,12 @@ function displayModal(e, employee) {
   modalNext.className = 'modal-next btn';
   modalNext.textContent = 'Next';
 
+  gallery.after(modalContainer);
   modalContainer.append(modal, modalBtnContainer);
   modal.append(modalCloseBtn, modalInfoContainer);
   modalCloseBtn.append(strongTextElement);
   modalInfoContainer.append(img, name, email, city, horizontalLine, cell, address, birthday);
   modalBtnContainer.append(modalPrev, modalNext);
-
-  const body = document.getElementsByTagName('body');
-  body[0].insertAdjacentElement('beforeend', modalContainer);
 
   modalContainer.addEventListener('click', (e) => {
     if (e.target === modalContainer || e.target === modalCloseBtn || e.target === strongTextElement) {
