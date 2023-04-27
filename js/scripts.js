@@ -64,6 +64,9 @@ function displayModal(e, employee) {
   const cell = document.createElement('P');
   const address = document.createElement('P');
   const birthday = document.createElement('P');
+  const modalBtnContainer = document.createElement('DIV');
+  const modalPrev = document.createElement('BUTTON');
+  const modalNext = document.createElement('BUTTON');
 
   modalContainer.className = 'modal-container';
 
@@ -100,10 +103,23 @@ function displayModal(e, employee) {
   birthday.className = 'modal-text';
   birthday.textContent = `Birthday: ${new Date(employee.dob.date).toLocaleDateString()}`;
 
-  modalContainer.append(modal);
+  modalBtnContainer.className = 'modal-btn-container';
+
+  modalPrev.type = 'button';
+  modalPrev.id = 'modal-prev';
+  modalPrev.className = 'modal-prev btn';
+  modalPrev.textContent = 'Prev';
+
+  modalNext.type = 'button';
+  modalNext.id = 'modal-next';
+  modalNext.className = 'modal-next btn';
+  modalNext.textContent = 'Next';
+
+  modalContainer.append(modal, modalBtnContainer);
   modal.append(modalCloseBtn, modalInfoContainer);
   modalCloseBtn.append(strongTextElement);
   modalInfoContainer.append(img, name, email, city, horizontalLine, cell, address, birthday);
+  modalBtnContainer.append(modalPrev, modalNext);
 
   const body = document.getElementsByTagName('body');
   body[0].insertAdjacentElement('beforeend', modalContainer);
@@ -114,7 +130,6 @@ function displayModal(e, employee) {
     }
   });
 }
-
 
 createSearchBar();
 
@@ -148,7 +163,6 @@ function displaySearchResults() {
   const gallery = document.getElementById('gallery');
   const cards = gallery.getElementsByClassName('card');
   const searchBox = document.getElementById('search-input');
-
   const searchInput = searchBox.value.toLowerCase();
 
   for (const card of cards) {
