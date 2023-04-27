@@ -69,69 +69,65 @@ function displayModal(employee, data) {
   const modalNext = document.createElement('BUTTON');
 
   modalContainer.className = 'modal-container';
-
   modal.className = 'modal';
-
   modalCloseBtn.type = 'button';
   modalCloseBtn.id = 'modal-close-btn';
   modalCloseBtn.className = 'modal-close-btn btn';
-
   strongTextElement.textContent = 'X';
-
   modalInfoContainer.className = 'modal-info-container';
-
   img.className = 'modal-img';
   img.src = employee.picture.large;
   img.alt = `${employee.name.first} ${employee.name.last}`;
-
   name.id = 'name';
   name.className = 'modal-name cap';
   name.textContent = `${employee.name.first} ${employee.name.last}`;
-
   email.className = 'modal-text';
   email.textContent = employee.email;
-
   city.className = 'modal-text cap';
   city.textContent = employee.location.city;
-
   cell.className = 'modal-text';
   cell.textContent = employee.cell;
-
   address.className = 'modal-text';
   address.textContent = `${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state}, ${employee.location.postcode}`;
-
   birthday.className = 'modal-text';
   birthday.textContent = `Birthday: ${new Date(employee.dob.date).toLocaleDateString()}`;
-
   modalBtnContainer.className = 'modal-btn-container';
-
   modalPrev.type = 'button';
   modalPrev.id = 'modal-prev';
   modalPrev.className = 'modal-prev btn';
   modalPrev.textContent = 'Prev';
-
   modalNext.type = 'button';
   modalNext.id = 'modal-next';
   modalNext.className = 'modal-next btn';
   modalNext.textContent = 'Next';
 
-  modalPrev.addEventListener('click', () => {
+  modalContainer.addEventListener('click', removeModal);
+  modalPrev.addEventListener('click', displayPreviousEmployee);
+  modalNext.addEventListener('click', displayNextEmployee);
+
+  function removeModal(e) {
+    if (e.target === modalContainer || e.target === modalCloseBtn || e.target === strongTextElement) {
+      modalContainer.remove();
+    }
+  }
+
+  function displayPreviousEmployee() {
     modalContainer.remove();
     if (employee === data[0]) {
       displayModal(data[data.length - 1], data)
     } else {
       displayModal(data[data.indexOf(employee) - 1], data);
     }
-  });
+  }
 
-  modalNext.addEventListener('click', () => {
+  function displayNextEmployee() {
     modalContainer.remove();
-    if (employee === data[data.length -1]) {
+    if (employee === data[data.length - 1]) {
       displayModal(data[0], data)
     } else {
       displayModal(data[data.indexOf(employee) + 1], data);
     }
-  });
+  }
 
   gallery.after(modalContainer);
   modalContainer.append(modal, modalBtnContainer);
@@ -139,12 +135,6 @@ function displayModal(employee, data) {
   modalCloseBtn.append(strongTextElement);
   modalInfoContainer.append(img, name, email, city, horizontalLine, cell, address, birthday);
   modalBtnContainer.append(modalPrev, modalNext);
-
-  modalContainer.addEventListener('click', (e) => {
-    if (e.target === modalContainer || e.target === modalCloseBtn || e.target === strongTextElement) {
-      modalContainer.remove();
-    }
-  });
 }
 
 createSearchBar();
