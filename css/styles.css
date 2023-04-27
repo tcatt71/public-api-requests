@@ -158,6 +158,8 @@ header h1 {
     background: rgba(0, 0, 0, 0.8);
     border-radius: 0.25em;
     border: 1px solid rgba(50, 50, 50, 0.3);
+    
+    transition: .4s ease-out;
 }
 
 .modal-img {

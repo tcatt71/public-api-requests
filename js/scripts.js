@@ -77,7 +77,7 @@ function displayModal(employee, data) {
 
   modalCloseBtn.type = 'button';
   modalCloseBtn.id = 'modal-close-btn';
-  modalCloseBtn.className = 'modal-close-btn';
+  modalCloseBtn.className = 'modal-close-btn btn';
 
   strongTextElement.textContent = 'X';
 
