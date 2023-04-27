@@ -5,6 +5,9 @@ fetch('https://randomuser.me/api/?results=12&nat=au,ca,gb,us')
 function displayCards(data) {
   data.forEach(employee => {
     const card = createCard(employee);
+    card.addEventListener('click', () => {
+      displayModal(employee, data);
+    });
     addCardToGallery(card);
   });
 }
@@ -15,7 +18,7 @@ function addCardToGallery(card) {
   gallery.insertAdjacentElement('beforeend', card);
 }
 
-function createCard(employee) {
+function createCard(employee, data) {
   const cardDiv = document.createElement('DIV');
   const cardImageDiv = document.createElement('DIV');
   const img = document.createElement('IMG');
@@ -45,12 +48,10 @@ function createCard(employee) {
   cardInfoDiv.insertAdjacentElement('beforeend', emailP);
   cardInfoDiv.insertAdjacentElement('beforeend', locationP);
 
-  cardDiv.addEventListener('click', e => displayModal(e, employee));
-
   return cardDiv;
 }
 
-function displayModal(e, employee) {
+function displayModal(employee, data) {
   const gallery = document.getElementById('gallery');
 
   const modalContainer = document.createElement('DIV');
@@ -116,6 +117,24 @@ function displayModal(e, employee) {
   modalNext.id = 'modal-next';
   modalNext.className = 'modal-next btn';
   modalNext.textContent = 'Next';
+
+  modalPrev.addEventListener('click', () => {
+    modalContainer.remove();
+    if (employee === data[0]) {
+      displayModal(data[data.length - 1], data)
+    } else {
+      displayModal(data[data.indexOf(employee) - 1], data);
+    }
+  });
+
+  modalNext.addEventListener('click', () => {
+    modalContainer.remove();
+    if (employee === data[data.length -1]) {
+      displayModal(data[0], data)
+    } else {
+      displayModal(data[data.indexOf(employee) + 1], data);
+    }
+  });
 
   gallery.after(modalContainer);
   modalContainer.append(modal, modalBtnContainer);
