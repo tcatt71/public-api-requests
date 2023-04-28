@@ -8,20 +8,16 @@ fetch('https://randomuser.me/api/?results=12&nat=au,ca,gb,us')
 function createSearchBar() {
   const searchContainer = document.getElementsByClassName('search-container');
 
-  const form = document.createElement('FORM');
-  const searchInput = document.createElement('INPUT');
-  const submitButton = document.createElement('INPUT');
+  const form = `
+    <form action="#" method="get">
+      <input type="search" id="search-input" class="search-input" placeholder="Search...">
+      <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>
+  `;
 
-  form.action = '#';
-  form.method = 'get';
-  searchInput.type = 'search';
-  searchInput.id = 'search-input';
-  searchInput.className = 'search-input';
-  searchInput.placeholder = 'Search...';
-  submitButton.type = 'submit';
-  submitButton.value = new DOMParser().parseFromString('&#x1F50D;', 'text/html').documentElement.textContent;
-  submitButton.id = 'search-submit';
-  submitButton.className = 'search-submit';
+  searchContainer[0].insertAdjacentHTML('afterbegin', form);
+
+  const searchInput = document.getElementById('search-input');
 
   searchInput.addEventListener('keyup', displaySearchResults);
 
@@ -42,9 +38,6 @@ function createSearchBar() {
       }
     }
   }
-
-  searchContainer[0].append(form);
-  form.append(searchInput, submitButton);
 }
 
 /**
