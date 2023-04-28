@@ -167,7 +167,7 @@ function displayModal(employee, data) {
   modalContainer.addEventListener('click', removeModal);
   modalPrev.addEventListener('click', displayPreviousEmployee);
   modalNext.addEventListener('click', displayNextEmployee);
-  
+
   /**
    * Removes the modal when clicking outside the modal or clicking the modal close button.
    * @param {Event} e - Event object
@@ -180,11 +180,16 @@ function displayModal(employee, data) {
 
   /** Displays the previous employee of the employees array as a modal. If the current employee displayed is the first element in the array clicking the previous button will display the last emmployee in the array. */
   function displayPreviousEmployee() {
+    const firstEmployee = data[0];
+    const lastEmployee = data[data.length - 1];
+    const previousEmployee = data[data.indexOf(employee) - 1];
+
     modalContainer.remove();
-    if (employee === data[0]) {
-      displayModal(data[data.length - 1], data)
+
+    if (employee === firstEmployee) {
+      displayModal(lastEmployee, data)
     } else {
-      displayModal(data[data.indexOf(employee) - 1], data);
+      displayModal(previousEmployee, data);
     }
   }
 
