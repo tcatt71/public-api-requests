@@ -96,59 +96,37 @@ function createCard(employee) {
  * @param {Array} data - Array of employee objects
  */
 function displayModal(employee, data) {
-  const gallery = document.getElementById('gallery');
+  const body = document.getElementsByTagName('body');
 
-  const modalContainer = document.createElement('DIV');
-  const modal = document.createElement('DIV');
-  const modalCloseBtn = document.createElement('BUTTON');
-  const strongTextElement = document.createElement('STRONG');
-  const modalInfoContainer = document.createElement('DIV');
-  const img = document.createElement('IMG');
-  const name = document.createElement('H3');
-  const email = document.createElement('P');
-  const city = document.createElement('P');
-  const horizontalLine = document.createElement('HR');
-  const cell = document.createElement('P');
-  const address = document.createElement('P');
-  const birthday = document.createElement('P');
-  const modalBtnContainer = document.createElement('DIV');
-  const modalPrev = document.createElement('BUTTON');
-  const modalNext = document.createElement('BUTTON');
+  const modalContainerStr = `
+    <div class="modal-container">
+      <div class="modal">
+        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+        <div class="modal-info-container">
+          <img class="modal-img" src="${employee.picture.large}" alt="${employee.name.first} ${employee.name.last}">
+          <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
+          <p class="modal-text">${employee.email}</p>
+          <p class="modal-text cap">${employee.location.city}</p>
+          <hr>
+          <p class="modal-text">${employee.cell}</p>
+          <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state}, ${employee.location.postcode}</p>
+          <p class="modal-text">Birthday: ${new Date(employee.dob.date).toLocaleDateString()}</p>
+        </div>
+      </div>
+      <div class="modal-btn-container">
+        <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+        <button type="button" id="modal-next" class="modal-next btn">Next</button>
+      </div>
+    </div>
+  `;
 
-  modalContainer.className = 'modal-container';
-  modal.className = 'modal';
-  modalCloseBtn.type = 'button';
-  modalCloseBtn.id = 'modal-close-btn';
-  modalCloseBtn.className = 'modal-close-btn btn';
-  strongTextElement.textContent = 'X';
-  modalInfoContainer.className = 'modal-info-container';
-  img.className = 'modal-img';
-  img.src = employee.picture.large;
-  img.alt = `${employee.name.first} ${employee.name.last}`;
-  name.id = 'name';
-  name.className = 'modal-name cap';
-  name.textContent = `${employee.name.first} ${employee.name.last}`;
-  email.className = 'modal-text';
-  email.textContent = employee.email;
-  city.className = 'modal-text cap';
-  city.textContent = employee.location.city;
-  cell.className = 'modal-text';
-  cell.textContent = employee.cell;
-  address.className = 'modal-text';
-  address.textContent = `${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state}, ${employee.location.postcode}`;
-  birthday.className = 'modal-text';
-  birthday.textContent = `Birthday: ${new Date(employee.dob.date).toLocaleDateString()}`;
-  modalBtnContainer.className = 'modal-btn-container';
-  modalPrev.type = 'button';
-  modalPrev.id = 'modal-prev';
-  modalPrev.className = 'modal-prev btn';
-  modalPrev.textContent = 'Prev';
-  modalNext.type = 'button';
-  modalNext.id = 'modal-next';
-  modalNext.className = 'modal-next btn';
-  modalNext.textContent = 'Next';
+  body[0].insertAdjacentHTML('beforeend', modalContainerStr);
 
-  modalContainer.addEventListener('click', removeModal);
+  const modalContainer = document.getElementsByClassName('modal-container');
+  const modalPrev = document.getElementById('modal-prev');
+  const modalNext = document.getElementById('modal-next');
+
+  modalContainer[0].addEventListener('click', removeModal);
   modalPrev.addEventListener('click', displayPreviousEmployee);
   modalNext.addEventListener('click', displayNextEmployee);
 
@@ -157,8 +135,11 @@ function displayModal(employee, data) {
    * @param {Event} e - Event object
    */
   function removeModal(e) {
-    if (e.target === modalContainer || e.target === modalCloseBtn || e.target === strongTextElement) {
-      modalContainer.remove();
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const strongTextElements = document.getElementsByTagName('strong');
+
+    if (e.target === modalContainer[0] || e.target === modalCloseBtn || e.target === strongTextElements[0]) {
+      modalContainer[0].remove();
     }
   }
 
@@ -168,7 +149,7 @@ function displayModal(employee, data) {
     const lastEmployee = data[data.length - 1];
     const previousEmployee = data[data.indexOf(employee) - 1];
 
-    modalContainer.remove();
+    modalContainer[0].remove();
 
     if (employee === firstEmployee) {
       displayModal(lastEmployee, data)
@@ -183,7 +164,7 @@ function displayModal(employee, data) {
     const firstEmployee = data[0];
     const nextEmployee = data[data.indexOf(employee) + 1];
 
-    modalContainer.remove();
+    modalContainer[0].remove();
 
     if (employee === lastEmployee) {
       displayModal(firstEmployee, data)
@@ -191,11 +172,4 @@ function displayModal(employee, data) {
       displayModal(nextEmployee, data);
     }
   }
-
-  gallery.after(modalContainer);
-  modalContainer.append(modal, modalBtnContainer);
-  modal.append(modalCloseBtn, modalInfoContainer);
-  modalCloseBtn.append(strongTextElement);
-  modalInfoContainer.append(img, name, email, city, horizontalLine, cell, address, birthday);
-  modalBtnContainer.append(modalPrev, modalNext);
 }
