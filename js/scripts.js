@@ -77,7 +77,6 @@ function addCardToGallery(card) {
  * @returns {Element} - Employee card
  */
 function createCard(employee) {
-  console.log(employee);
   const card = document.createElement('DIV');
   const cardImgContainer = document.createElement('DIV');
   const cardImg = document.createElement('IMG');
