@@ -53,11 +53,15 @@ function createSearchBar() {
  */
 function displayCards(data) {
   data.forEach(employee => {
-    const card = createCard(employee);
-    card.addEventListener('click', () => {
+    const gallery = document.getElementById('gallery');
+    const cards = gallery.getElementsByClassName('card');
+    const cardStr = createCard(employee);
+
+    addCardToGallery(cardStr);
+
+    cards[cards.length - 1].addEventListener('click', () => {
       displayModal(employee, data);
     });
-    addCardToGallery(card);
   });
 }
 
@@ -68,40 +72,27 @@ function displayCards(data) {
 function addCardToGallery(card) {
   const gallery = document.getElementById('gallery');
 
-  gallery.insertAdjacentElement('beforeend', card);
+  gallery.insertAdjacentHTML('beforeend', card);
 }
 
 /**
  * Creates a card element.
  * @param {Object} employee - Employee object
- * @returns {Element} - Employee card
+ * @returns {String} - HTML of the employee card
  */
 function createCard(employee) {
-  const card = document.createElement('DIV');
-  const cardImgContainer = document.createElement('DIV');
-  const cardImg = document.createElement('IMG');
-  const cardInfoContainer = document.createElement('DIV');
-  const name = document.createElement('H3');
-  const email = document.createElement('P');
-  const location = document.createElement('P');
-
-  card.className = 'card';
-  cardImgContainer.className = 'card-img-container';
-  cardImg.className = 'card-img';
-  cardImg.src = employee.picture.large;
-  cardImg.alt = `${employee.name.first} ${employee.name.last}`;
-  cardInfoContainer.className = 'card-info-container';
-  name.id = 'name';
-  name.className = 'card-name cap';
-  name.textContent = `${employee.name.first} ${employee.name.last}`;
-  email.className = 'card-text';
-  email.textContent = employee.email;
-  location.className = 'card-text cap';
-  location.textContent = `${employee.location.city}, ${employee.location.state}`;
-
-  card.append(cardImgContainer, cardInfoContainer);
-  cardImgContainer.append(cardImg);
-  cardInfoContainer.append(name, email, location);
+  const card = `
+    <div class="card">
+      <div class="card-img-container">
+        <img class="card-img" src="${employee.picture.large}" alt="${employee.name.first} ${employee.name.last}">
+      </div>
+      <div class="card-info-container">
+        <h3 id="name" class="card-name cap">${employee.name.first} ${employee.name.last}</h3>
+        <p class="card-text">${employee.email}</p>
+        <p class="card-text cap">${employee.location.city}, ${employee.location.state}</p>
+      </div>
+    </div>
+  `;
 
   return card;
 }
