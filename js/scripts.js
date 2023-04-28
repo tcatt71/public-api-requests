@@ -195,11 +195,16 @@ function displayModal(employee, data) {
 
   /** Displays the next employee of the employees array as a modal. If the current employee displayed is the last element in the array clicking the next button will display the first employee in the array. */
   function displayNextEmployee() {
+    const lastEmployee = data[data.length - 1];
+    const firstEmployee = data[0];
+    const nextEmployee = data[data.indexOf(employee) + 1];
+
     modalContainer.remove();
-    if (employee === data[data.length - 1]) {
-      displayModal(data[0], data)
+
+    if (employee === lastEmployee) {
+      displayModal(firstEmployee, data)
     } else {
-      displayModal(data[data.indexOf(employee) + 1], data);
+      displayModal(nextEmployee, data);
     }
   }
 
