@@ -106,6 +106,11 @@ function createCard(employee) {
   return card;
 }
 
+/**
+ * Creates the modal and inserts it into the DOM.
+ * @param {Object} employee - Employee object
+ * @param {Array} data - Array of employee objects
+ */
 function displayModal(employee, data) {
   const gallery = document.getElementById('gallery');
 
