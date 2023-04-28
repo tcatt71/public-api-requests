@@ -4,6 +4,7 @@ fetch('https://randomuser.me/api/?results=12&nat=au,ca,gb,us')
   .then(response => response.json())
   .then(data => displayCards(data.results));
 
+/** Creates the search bar. */
 function createSearchBar() {
   const searchContainer = document.getElementsByClassName('search-container');
 
@@ -24,6 +25,7 @@ function createSearchBar() {
 
   searchInput.addEventListener('keyup', displaySearchResults);
 
+  /** Displays the results returned by the user's search query. */
   function displaySearchResults() {
     const gallery = document.getElementById('gallery');
     const cards = gallery.getElementsByClassName('card');
@@ -45,6 +47,10 @@ function createSearchBar() {
   form.append(searchInput, submitButton);
 }
 
+/**
+ * Displays the employee cards.
+ * @param {Array} data - An array containing the employee objects.
+ */
 function displayCards(data) {
   data.forEach(employee => {
     const card = createCard(employee);
@@ -55,13 +61,23 @@ function displayCards(data) {
   });
 }
 
+/**
+ * Adds a card element to the gallery of cards to be displayed.
+ * @param {Element} card - The card to be added to the gallery.
+ */
 function addCardToGallery(card) {
   const gallery = document.getElementById('gallery');
 
   gallery.insertAdjacentElement('beforeend', card);
 }
 
+/**
+ * Creates a card element.
+ * @param {Object} employee - Employee object
+ * @returns {Element} - Employee card
+ */
 function createCard(employee) {
+  console.log(employee);
   const card = document.createElement('DIV');
   const cardImgContainer = document.createElement('DIV');
   const cardImg = document.createElement('IMG');
@@ -147,13 +163,18 @@ function displayModal(employee, data) {
   modalContainer.addEventListener('click', removeModal);
   modalPrev.addEventListener('click', displayPreviousEmployee);
   modalNext.addEventListener('click', displayNextEmployee);
-
+  
+  /**
+   * Removes the modal when clicking outside the modal or clicking the modal close button.
+   * @param {Event} e - Event object
+   */
   function removeModal(e) {
     if (e.target === modalContainer || e.target === modalCloseBtn || e.target === strongTextElement) {
       modalContainer.remove();
     }
   }
 
+  /** Displays the previous employee of the employees array as a modal. If the current employee displayed is the first element in the array clicking the previous button will display the last emmployee in the array. */
   function displayPreviousEmployee() {
     modalContainer.remove();
     if (employee === data[0]) {
@@ -163,6 +184,7 @@ function displayModal(employee, data) {
     }
   }
 
+  /** Displays the next employee of the employees array as a modal. If the current employee displayed is the last element in the array clicking the next button will display the first employee in the array. */
   function displayNextEmployee() {
     modalContainer.remove();
     if (employee === data[data.length - 1]) {
